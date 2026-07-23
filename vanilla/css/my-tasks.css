@@ -1,0 +1,21 @@
+/* =============================================================================
+   EarnLoop — My Tasks page styles (plain CSS, ported from MyTasksPage.tsx)
+   ============================================================================= */
+
+.mtasks-tabs { margin-bottom: 1.5rem; }
+
+.mtasks-task { display: flex; align-items: center; gap: 0.75rem; }
+.mtasks-task__ic {
+    display: flex; width: 2rem; height: 2rem; flex-shrink: 0;
+    align-items: center; justify-content: center;
+    border-radius: var(--radius-xl); background-color: #FBFBF7; box-shadow: var(--shadow-sm);
+    color: var(--foreground);
+}
+.mtasks-task__ic svg, .mtasks-task__ic img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
+.mtasks-task__body { min-width: 0; }
+.mtasks-task__title { max-width: 20rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; color: var(--foreground); }
+.mtasks-task__reason { margin-top: 0.125rem; display: flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; color: var(--destructive); }
+.mtasks-task__reason svg { width: 0.75rem; height: 0.75rem; flex-shrink: 0; }
+
+.mtasks-points { font-weight: 500; color: var(--foreground); }
+.mtasks-submitted { color: var(--muted-foreground); white-space: nowrap; }

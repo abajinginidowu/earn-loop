@@ -1,0 +1,29 @@
+/* =============================================================================
+   EarnLoop — Notifications page styles (plain CSS, ported from NotificationsPage.tsx)
+   ============================================================================= */
+
+.notif-card { gap: 0; padding-block: 0; }
+
+.notif-item {
+    display: flex; width: 100%; align-items: flex-start; gap: 0.75rem;
+    padding: 1rem; text-align: left; background-color: transparent;
+    border-top: 1px solid var(--border); transition: background-color 0.15s;
+}
+.notif-item:first-child { border-top: 0; }
+@media (min-width: 640px) { .notif-item { padding: 1.25rem; } }
+.notif-item.is-unread { background-color: color-mix(in srgb, var(--primary) 3%, transparent); }
+.notif-item.is-unread:hover,
+.notif-item:hover { background-color: color-mix(in srgb, var(--muted) 50%, transparent); }
+
+.notif-item__ic {
+    display: flex; width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+    align-items: center; justify-content: center;
+    border-radius: var(--radius-xl); background-color: #FBFBF7; box-shadow: var(--shadow-sm); color: var(--foreground);
+}
+.notif-item__ic svg { width: 1rem; height: 1rem; }
+.notif-item__body { min-width: 0; flex: 1; }
+.notif-item__head { display: flex; align-items: center; gap: 0.5rem; }
+.notif-item__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; color: var(--foreground); }
+.notif-item__dot { width: 0.375rem; height: 0.375rem; flex-shrink: 0; border-radius: var(--radius-pill); background-color: var(--primary); }
+.notif-item__msg { margin-top: 0.25rem; font-size: 0.875rem; color: var(--muted-foreground); }
+.notif-item__time { margin-top: 0.25rem; font-size: 0.75rem; color: var(--muted-foreground); }

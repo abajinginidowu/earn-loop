@@ -1,0 +1,69 @@
+<!-- =============================================================================
+     EarnLoop — Onboarding (vanilla HTML + plain CSS, no Tailwind)
+     Standalone 3-step profile completion (Country → Categories → Socials).
+     Styles: css/theme.css · base.css · components.css · onboarding.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Get Started | EarnLoop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/onboarding.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<div class="ob">
+  <div class="card card--pad-lg ob-card">
+    <!-- Step progress -->
+    <div class="ob-progress">
+      <div class="ob-progress__meta">
+        <span id="ob-step-count">Step 1 of 3</span>
+        <span id="ob-step-name">Country</span>
+      </div>
+      <div class="progress"><div id="ob-progress-bar" class="progress__bar" style="width:33%"></div></div>
+    </div>
+
+    <!-- Step 0: Country -->
+    <div class="ob-step" data-step="0">
+      <h1 class="ob-title">Where are you based?</h1>
+      <p class="ob-desc">This helps us match you with relevant tasks and campaigns.</p>
+      <div class="ob-field field">
+        <label class="field__label" for="ob-country">Country</label>
+        <select id="ob-country" class="select"></select>
+      </div>
+    </div>
+
+    <!-- Step 1: Categories -->
+    <div class="ob-step" data-step="1" hidden>
+      <h1 class="ob-title">What's your focus?</h1>
+      <p class="ob-desc">Pick every business category that describes you or your brand.</p>
+      <div id="ob-cats" class="ob-cats"></div>
+    </div>
+
+    <!-- Step 2: Socials -->
+    <div class="ob-step" data-step="2" hidden>
+      <h1 class="ob-title">Connect your socials</h1>
+      <p class="ob-desc">Optional, but tasks match faster when we know your handles.</p>
+      <div id="ob-socials" class="ob-socials"></div>
+    </div>
+
+    <!-- Footer nav -->
+    <div class="ob-foot">
+      <button type="button" id="ob-back" class="btn btn--ghost" disabled><i data-lucide="arrow-left"></i> Back</button>
+      <button type="button" id="ob-continue" class="btn btn--primary">Continue <i data-lucide="arrow-right"></i></button>
+      <button type="button" id="ob-finish" class="btn btn--primary" hidden>Open Dashboard <i data-lucide="arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/onboarding.js"></script>

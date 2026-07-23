@@ -1,0 +1,126 @@
+<!-- =============================================================================
+     EarnLoop — Admin Dashboard (vanilla HTML + plain CSS, no Tailwind)
+     Standalone admin shell + 7 hash-routed sections (driven by js/admin.js).
+     Styles: css/theme.css · base.css · components.css · admin.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin | EarnLoop</title>
+
+<!-- Admin-only page. Hide everything until admin.js confirms an admin session
+     (via SB.requireAdmin), so admin content never flashes to a non-admin before
+     the redirect. Revealed on success; a fallback timer un-hides if Supabase
+     never loads so the page can't white-screen permanently. -->
+<script>
+  document.documentElement.style.visibility = "hidden";
+  window.__adminReveal = function () { document.documentElement.style.visibility = ""; };
+  setTimeout(function () { if (!window.SB) window.__adminReveal(); }, 4000);
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/admin.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<div class="admin">
+  <!-- Desktop sidebar -->
+  <aside class="admin-sidebar">
+    <a href="#overview" class="admin-logo"><span class="admin-logo__mark">E</span><span class="wordmark admin-logo__text">EarnLoop Admin</span></a>
+    <nav id="admin-nav" class="admin-nav"></nav>
+    <div class="admin-sidebar__foot">
+      <div class="admin-sidebar__sep"></div>
+      <a href="landing.html" class="admin-exit"><i data-lucide="log-out"></i> Exit Admin</a>
+    </div>
+  </aside>
+
+  <div class="admin-col">
+    <!-- Header -->
+    <header class="admin-header">
+      <button type="button" id="admin-menu-btn" class="admin-iconbtn admin-header__menu" aria-label="Open menu"><i data-lucide="menu"></i></button>
+      <a href="#overview" class="admin-logo admin-header__logo"><span class="admin-logo__mark">E</span></a>
+      <div class="admin-header__spacer"></div>
+      <div class="admin-who">
+        <span class="avatar avatar--sm"><span id="admin-avatar" class="avatar__fallback">MC</span></span>
+        <div class="admin-who__text">
+          <div id="admin-name" class="admin-who__name">Marcus Chen</div>
+          <div class="admin-who__role">Administrator</div>
+        </div>
+      </div>
+      <a href="dashboard.html" class="admin-iconbtn" aria-label="Back to app"><i data-lucide="log-out"></i></a>
+    </header>
+
+    <!-- Section content -->
+    <main class="admin-main">
+      <div class="page-header">
+        <div>
+          <h1 id="admin-sec-title" class="page-header__title">Overview</h1>
+          <p id="admin-sec-desc" class="page-header__desc"></p>
+        </div>
+      </div>
+      <div id="admin-content"></div>
+    </main>
+  </div>
+
+  <!-- Mobile footer nav -->
+  <nav id="admin-footer-nav" class="admin-footer-nav"></nav>
+
+  <!-- Mobile sheet -->
+  <div id="admin-sheet" class="admin-sheet" hidden>
+    <div id="admin-sheet-backdrop" class="admin-sheet__backdrop"></div>
+    <div class="admin-sheet__panel">
+      <a href="#overview" class="admin-logo"><span class="admin-logo__mark">E</span><span class="wordmark admin-logo__text">EarnLoop Admin</span></a>
+      <nav id="admin-nav-mobile" class="admin-nav"></nav>
+      <div class="admin-sidebar__foot">
+        <div class="admin-sidebar__sep"></div>
+        <a href="landing.html" class="admin-exit"><i data-lucide="log-out"></i> Exit Admin</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add-category dialog -->
+  <div id="admin-cat-dialog" class="dialog" aria-hidden="true">
+    <div class="dialog__backdrop" data-dialog-close></div>
+    <div class="dialog__panel" role="dialog" aria-modal="true">
+      <button type="button" class="dialog__close" data-dialog-close><i data-lucide="x"></i></button>
+      <div class="dialog__header">
+        <h2 class="dialog__title">New Task Category</h2>
+        <p class="dialog__desc">Categories group tasks by type across the platform.</p>
+      </div>
+      <div class="field">
+        <label class="field__label" for="admin-cat-name">Category Name</label>
+        <input id="admin-cat-name" class="input" type="text" placeholder="e.g. Gaming" />
+      </div>
+      <div class="dialog__footer">
+        <button type="button" class="btn btn--outline" data-dialog-close>Cancel</button>
+        <button type="button" id="admin-cat-create" class="btn btn--primary" disabled>Create Category</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete-user confirm dialog -->
+  <div id="admin-del-dialog" class="dialog" aria-hidden="true">
+    <div class="dialog__backdrop" data-dialog-close></div>
+    <div class="dialog__panel" role="alertdialog" aria-modal="true">
+      <div class="dialog__header">
+        <h2 id="admin-del-title" class="dialog__title">Delete user?</h2>
+        <p class="dialog__desc">This permanently removes the user and cannot be undone.</p>
+      </div>
+      <div class="dialog__footer">
+        <button type="button" class="btn btn--outline" data-dialog-close>Cancel</button>
+        <button type="button" id="admin-del-confirm" class="btn btn--primary" style="background-color:var(--destructive);color:var(--destructive-foreground)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/admin.js"></script>

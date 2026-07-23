@@ -1,0 +1,75 @@
+/* =============================================================================
+   EarnLoop — Design Tokens ("Collider editorial")
+   -----------------------------------------------------------------------------
+   THIS IS YOUR MAIN STYLING FILE for global values. Every color, font, corner
+   radius and shadow is a variable here. Change one line to restyle everything.
+   Component/layout rules live in components.css and each page's own .css file.
+
+   Colors are HSL:  hsl(24 84% 60%)  = hue 24, saturation 84%, lightness 60%.
+   ============================================================================= */
+
+:root {
+    /* --- Fonts ------------------------------------------------------------ */
+    --font-display: 'Anton', 'Archivo', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Archivo', 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    /* --- Corner radius (everything scales off --radius) ------------------- */
+    --radius: 0.4rem;
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+    --radius-pill: 9999px;
+
+    /* --- z-index scale ---------------------------------------------------- */
+    --z-header: 100;
+    --z-sidebar: 90;
+    --z-dropdown: 200;
+    --z-modal-backdrop: 300;
+    --z-modal: 310;
+    --z-overlay: 320;
+    --z-toast: 400;
+
+    /* --- Colors (light) --------------------------------------------------- */
+    --background: hsl(30 44% 97%);
+    --foreground: hsl(24 12% 9%);
+    --card: hsl(36 50% 99%);
+    --card-foreground: hsl(24 12% 9%);
+    --popover: hsl(36 50% 99%);
+    --popover-foreground: hsl(24 12% 9%);
+    --primary: hsl(24 12% 9%);
+    --primary-foreground: hsl(30 44% 97%);
+    --secondary: hsl(14 62% 92%);
+    --secondary-foreground: hsl(24 14% 12%);
+    --muted: hsl(28 32% 93%);
+    --muted-foreground: hsl(20 8% 38%);
+    --accent: hsl(14 74% 91%);
+    --accent-foreground: hsl(24 14% 12%);
+    --destructive: hsl(4 74% 52%);
+    --destructive-foreground: hsl(0 0% 100%);
+    --success: hsl(142 48% 51%);
+    --success-foreground: hsl(0 0% 100%);
+    --warning: hsl(45 96% 52%);
+    --warning-foreground: hsl(24 14% 12%);
+    --info: hsl(199 69% 45%);
+    --info-foreground: hsl(0 0% 100%);
+    --ember: hsl(24 84% 60%);
+    --ember-foreground: hsl(24 14% 12%);
+    --border: hsl(24 16% 86%);
+    --input: hsl(24 16% 84%);
+    --ring: hsl(199 69% 45%);
+
+    /* Collider accent literals used directly on the landing page */
+    --sky: hsl(199 69% 45%);
+    --peach-bg: hsl(14 74% 91%);
+
+    /* --- Shadows ---------------------------------------------------------- */
+    --shadow-xs: 0 1px 2px 0 rgb(40 24 16 / 0.05);
+    --shadow-sm: 0 1px 3px 0 rgb(40 24 16 / 0.07), 0 1px 2px -1px rgb(40 24 16 / 0.07);
+    --shadow-md: 0 4px 10px -2px rgb(40 24 16 / 0.09), 0 2px 4px -2px rgb(40 24 16 / 0.07);
+    --shadow-lg: 0 14px 28px -6px rgb(40 24 16 / 0.12), 0 6px 10px -6px rgb(40 24 16 / 0.08);
+}

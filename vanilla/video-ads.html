@@ -1,0 +1,89 @@
+<!-- =============================================================================
+     EarnLoop — Video Ads (vanilla HTML + plain CSS, no Tailwind)
+     Post-an-ad form (cash budget / points package) + My Video Ads table.
+     Styles: css/theme.css · base.css · components.css · app.css · video-ads.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Video Ads | EarnLoop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/video-ads.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<main data-app-main data-active="video-ads">
+  <!-- Page header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-header__title">Video Ads</h1>
+      <p class="page-header__desc">Post a video ad for your product and reach users across the platform.</p>
+    </div>
+  </div>
+
+  <!-- Info banner -->
+  <div class="card card--pad va-info">
+    <span class="va-info__ic"><i data-lucide="clock"></i></span>
+    <p id="va-info-text" class="va-info__text"></p>
+  </div>
+
+  <!-- Post a Video Ad form -->
+  <div class="card card--pad-lg">
+    <h3 class="va-form-title">Post a Video Ad</h3>
+    <div class="va-fields">
+      <div class="field">
+        <label class="field__label" for="va-brand">Brand / Product Name</label>
+        <input id="va-brand" class="input" type="text" placeholder="e.g. Nova Skincare" />
+      </div>
+      <div class="field">
+        <label class="field__label" for="va-link">Destination Link <span class="field__hint">(optional)</span></label>
+        <input id="va-link" class="input" type="url" inputmode="url" placeholder="https://yourproduct.com" />
+        <div id="va-link-warn"></div>
+      </div>
+      <div class="field">
+        <label class="field__label">Product Video</label>
+        <input id="va-file" class="va-file-input" type="file" accept="video/*" />
+        <div class="va-file-row">
+          <button type="button" id="va-choose" class="btn btn--secondary"><i data-lucide="file-video"></i> Choose from Gallery</button>
+          <span id="va-file-name" class="va-file-row__name">No video selected</span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field__label" for="va-category">Category</label>
+        <select id="va-category" class="select"></select>
+      </div>
+      <div class="field">
+        <label class="field__label" for="va-country">Target Country</label>
+        <select id="va-country" class="select"></select>
+      </div>
+    </div>
+
+    <div id="va-preview-wrap"></div>
+
+    <h4 class="va-pay-h">Pay with</h4>
+    <div id="va-pay-grid" class="va-pay-grid pay-grid"></div>
+    <div id="va-detail"></div>
+
+    <div class="va-submit-row">
+      <button type="button" id="va-submit" class="btn btn--primary" disabled><i data-lucide="video"></i> Submit Video Ad</button>
+    </div>
+  </div>
+
+  <!-- My Video Ads -->
+  <div class="card card--flush va-history">
+    <div class="va-history__head"><h3 class="va-history__title">My Video Ads</h3></div>
+    <div id="va-history-body"></div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/video-ads.js"></script>
+<script src="js/shell.js"></script>

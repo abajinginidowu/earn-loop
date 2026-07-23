@@ -1,0 +1,23 @@
+/* =============================================================================
+   EarnLoop — Referral page styles (plain CSS, ported from ReferralPage.tsx)
+   ============================================================================= */
+
+/* --- Referral code card -------------------------------------------------- */
+.ref-code { margin-top: 1.5rem; }
+.ref-code__desc { margin-top: 0.25rem; font-size: 0.875rem; color: var(--muted-foreground); }
+.ref-code__row { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
+@media (min-width: 640px) { .ref-code__row { flex-direction: row; } }
+.ref-code__group { display: flex; flex: 1; align-items: center; gap: 0.5rem; }
+.ref-code__group .input { height: 2.5rem; }
+
+/* --- Invited friends table ---------------------------------------------- */
+.ref-history { margin-top: 1.5rem; gap: 0; padding-block: 0; }
+.ref-history__head { padding: 1.25rem; }
+@media (min-width: 640px) { .ref-history__head { padding: 1.5rem 1.5rem 0; } }
+.ref-history .table { margin-top: 1rem; }
+.ref-history .empty-state { margin: 1.5rem; }
+
+.ref-friend { display: flex; align-items: center; gap: 0.75rem; }
+.ref-friend__name { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; color: var(--foreground); }
+.ref-joined { color: var(--muted-foreground); white-space: nowrap; }
+.ref-reward { font-weight: 500; color: var(--foreground); }

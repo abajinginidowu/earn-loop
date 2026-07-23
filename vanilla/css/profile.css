@@ -1,0 +1,49 @@
+/* =============================================================================
+   EarnLoop — Profile page styles (plain CSS, ported from ProfilePage.tsx)
+   ============================================================================= */
+
+/* --- Header card --------------------------------------------------------- */
+.prof-header { display: flex; flex-direction: column; gap: 1.5rem; }
+@media (min-width: 640px) { .prof-header { flex-direction: row; align-items: center; justify-content: space-between; } }
+.prof-id { display: flex; align-items: center; gap: 1rem; }
+.prof-id__name-row { display: flex; align-items: center; gap: 0.5rem; }
+.prof-id__name { font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; color: var(--foreground); }
+.prof-id__handle { margin-top: 0.125rem; font-size: 0.875rem; color: var(--muted-foreground); }
+.prof-id__meta { margin-top: 0.375rem; display: flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; color: var(--muted-foreground); }
+
+.prof-xp { width: 100%; max-width: 20rem; }
+.prof-xp__row { display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--muted-foreground); }
+.prof-xp .progress { margin-top: 0.375rem; }
+.prof-xp__note { margin-top: 0.25rem; text-align: right; font-size: 0.75rem; color: var(--muted-foreground); }
+
+.prof-bio { margin-top: 1.25rem; max-width: 42rem; font-size: 0.875rem; color: var(--muted-foreground); }
+.prof-cats { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* --- Mini stat cards ----------------------------------------------------- */
+.prof-stats { margin-top: 1.5rem; display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .prof-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .prof-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.prof-stat__ic { display: flex; width: 2.25rem; height: 2.25rem; align-items: center; justify-content: center; border-radius: var(--radius-xl); background-color: #FBFBF7; box-shadow: var(--shadow-sm); }
+.prof-stat__ic svg { width: 1rem; height: 1rem; }
+.prof-stat__ic--points { color: var(--primary); }
+.prof-stat__ic--cash { color: var(--success); }
+.prof-stat__ic--streak { color: var(--warning); }
+.prof-stat__ic--badges { color: var(--foreground); }
+.prof-stat__value { margin-top: 1rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: var(--foreground); }
+.prof-stat__label { margin-top: 0.25rem; font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; color: var(--muted-foreground); }
+
+/* --- Achievements -------------------------------------------------------- */
+.prof-ach { margin-top: 1.5rem; }
+.prof-ach__grid { margin-top: 1rem; display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .prof-ach__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .prof-ach__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.prof-ach__item { display: flex; align-items: flex-start; gap: 0.75rem; border-radius: var(--radius-xl); border: 1px solid var(--border); padding: 1rem; }
+.prof-ach__item.is-unlocked { border-color: color-mix(in srgb, var(--primary) 30%, transparent); background-color: color-mix(in srgb, var(--primary) 5%, transparent); }
+.prof-ach__ic { display: flex; width: 2.25rem; height: 2.25rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: var(--radius-xl); background-color: #FBFBF7; box-shadow: var(--shadow-sm); color: var(--muted-foreground); }
+.prof-ach__item.is-unlocked .prof-ach__ic { color: var(--primary); }
+.prof-ach__ic svg { width: 1rem; height: 1rem; }
+.prof-ach__body { min-width: 0; flex: 1; }
+.prof-ach__name { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; color: var(--foreground); }
+.prof-ach__desc { margin-top: 0.125rem; font-size: 0.75rem; color: var(--muted-foreground); }
+.prof-ach__prog { margin-top: 0.5rem; }
+.prof-ach__prog-note { margin-top: 0.25rem; font-size: 11px; color: var(--muted-foreground); }

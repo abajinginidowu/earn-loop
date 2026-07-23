@@ -1,0 +1,65 @@
+/* =============================================================================
+   EarnLoop — Tasks page styles (plain CSS, ported from TasksPage.tsx)
+   ============================================================================= */
+
+/* --- Filter bar ---------------------------------------------------------- */
+.tasks-filters { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+@media (min-width: 640px) {
+    .tasks-filters { flex-direction: row; align-items: center; }
+    .tasks-filters__search { max-width: 20rem; }
+    .tasks-filters .select { width: 11rem; }
+}
+
+/* --- Task grid ----------------------------------------------------------- */
+.tasks-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .tasks-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .tasks-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* --- Task card ----------------------------------------------------------- */
+.task-card { gap: 0; }
+.task-card__head { display: flex; align-items: center; gap: 0.75rem; }
+.task-card__ic {
+    display: flex; width: 2.5rem; height: 2.5rem; flex-shrink: 0;
+    align-items: center; justify-content: center;
+    border-radius: var(--radius-xl); background-color: #FBFBF7; box-shadow: var(--shadow-sm);
+    color: var(--foreground);
+}
+.task-card__ic svg, .task-card__ic img { width: 1.75rem; height: 1.75rem; object-fit: contain; }
+.task-card__meta { min-width: 0; flex: 1; }
+.task-card__brand { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; color: var(--foreground); }
+.task-card__action { font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; color: var(--muted-foreground); }
+.task-card__title { margin-top: 1rem; flex: 1; font-size: 0.875rem; color: var(--foreground); }
+.task-card__foot { margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--muted-foreground); }
+.task-card__date { display: flex; align-items: center; gap: 0.25rem; }
+.task-card__date svg { width: 0.875rem; height: 0.875rem; }
+.task-card__cta { margin-top: 1rem; }
+
+/* --- Dialog detail bits -------------------------------------------------- */
+.task-note {
+    display: flex; align-items: flex-start; gap: 0.5rem;
+    border-radius: var(--radius-lg); background-color: var(--muted);
+    padding: 0.75rem; font-size: 0.75rem; color: var(--muted-foreground);
+}
+.task-note svg { margin-top: 0.125rem; width: 1rem; height: 1rem; flex-shrink: 0; color: var(--primary); }
+
+/* Copyable link / url / username for the task */
+.task-target { margin-bottom: 1rem; }
+.task-target__label { margin-bottom: 0.375rem; font-size: 0.75rem; font-weight: 600; text-transform: capitalize; color: var(--muted-foreground); }
+.task-target__row { display: flex; align-items: center; gap: 0.5rem; }
+.task-target__value {
+    flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    border-radius: var(--radius-lg); border: 1px solid var(--border); background-color: var(--muted);
+    padding: 0.5rem 0.75rem; font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.8125rem; color: var(--foreground);
+}
+.task-target__row .btn { flex-shrink: 0; }
+
+.task-upload {
+    display: flex; cursor: pointer; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.5rem; border-radius: var(--radius-xl); border: 1px dashed var(--border);
+    padding: 2rem; text-align: center; transition: background-color 0.15s;
+}
+.task-upload:hover { background-color: var(--muted); }
+.task-upload svg { width: 1.25rem; height: 1.25rem; color: var(--muted-foreground); }
+.task-upload__name { font-size: 0.875rem; font-weight: 500; color: var(--foreground); }
+.task-upload__hint { font-size: 0.75rem; color: var(--muted-foreground); }
+.task-upload input { display: none; }

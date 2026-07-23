@@ -1,0 +1,85 @@
+/* =============================================================================
+   EarnLoop — Base reset + typography
+   -----------------------------------------------------------------------------
+   Reproduces the CSS reset the original app relied on (so spacing/sizing match),
+   plus the global type styles. You rarely edit this file.
+   ============================================================================= */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--border);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    tab-size: 4;
+    font-family: var(--font-sans);
+}
+
+body {
+    min-height: 100vh;
+    line-height: inherit;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-size: inherit;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+p { text-wrap: pretty; }
+
+img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
+    vertical-align: middle;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+button, input, optgroup, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+button, [type="button"], [type="reset"], [type="submit"] {
+    -webkit-appearance: button;
+    appearance: button;
+    background-color: transparent;
+    background-image: none;
+    cursor: pointer;
+}
+
+button:disabled { cursor: default; }
+
+ol, ul, menu { list-style: none; }
+
+:focus-visible { outline: 2px solid transparent; }
+
+::placeholder { opacity: 1; color: color-mix(in srgb, currentColor 50%, transparent); }

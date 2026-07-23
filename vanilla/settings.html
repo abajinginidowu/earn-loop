@@ -1,0 +1,95 @@
+<!-- =============================================================================
+     EarnLoop — Account Settings (vanilla HTML + plain CSS, no Tailwind)
+     Profile / Social Accounts / Preferences tabs, driven by js/settings.js.
+     Styles: css/theme.css · base.css · components.css · app.css · settings.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Account Settings | EarnLoop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/settings.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<main data-app-main data-active="settings">
+  <!-- Page header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-header__title">Account Settings</h1>
+      <p class="page-header__desc">Manage your profile, connections, and preferences.</p>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div id="set-tabs" class="tabs__list" role="tablist">
+      <button type="button" class="tabs__trigger is-active" data-tab="profile">Profile</button>
+      <button type="button" class="tabs__trigger" data-tab="socials">Social Accounts</button>
+      <button type="button" class="tabs__trigger" data-tab="preferences">Preferences</button>
+    </div>
+  </div>
+
+  <!-- Profile panel -->
+  <div class="set-panel" data-panel="profile">
+    <div class="card card--pad-lg set-card">
+      <div class="set-avatar-row">
+        <label class="avatar set-avatar" title="Upload profile picture">
+          <span id="set-avatar-fallback" class="avatar__fallback">AO</span>
+          <span class="set-avatar__overlay"><i data-lucide="camera"></i></span>
+          <input id="set-avatar-input" class="set-avatar-file" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/*" />
+        </label>
+        <div class="set-avatar-meta">
+          <div class="set-avatar-title">Profile Picture</div>
+          <p class="set-avatar-desc">Upload a square image. PNG, JPG, WEBP or GIF.</p>
+          <div class="set-avatar-actions">
+            <button type="button" id="set-avatar-save" class="btn btn--primary btn--sm" hidden><i data-lucide="check"></i> Save Picture</button>
+            <button type="button" id="set-avatar-remove" class="btn btn--outline btn--sm" hidden><i data-lucide="trash-2"></i> Remove</button>
+          </div>
+        </div>
+      </div>
+      <div class="set-grid">
+        <div class="field"><label class="field__label" for="set-fullname">Full Name</label><input id="set-fullname" class="input" type="text" /></div>
+        <div class="field"><label class="field__label" for="set-username">Username</label><input id="set-username" class="input" type="text" /></div>
+        <div class="field set-col-2"><label class="field__label" for="set-email">Email</label><input id="set-email" class="input" type="email" /></div>
+        <div class="field"><label class="field__label" for="set-country">Country</label><select id="set-country" class="select"></select></div>
+        <div class="field set-col-2"><label class="field__label" for="set-bio">Bio</label><textarea id="set-bio" class="textarea" rows="3" placeholder="Tell brands a bit about yourself"></textarea></div>
+        <div class="field set-col-2"><label class="field__label">Business Categories</label><div id="set-cats" class="set-cats"></div></div>
+      </div>
+      <div class="set-save"><button type="button" id="set-save-profile" class="btn btn--primary">Save Changes</button></div>
+    </div>
+  </div>
+
+  <!-- Social Accounts panel -->
+  <div class="set-panel" data-panel="socials" hidden>
+    <div class="card card--pad-lg set-card">
+      <div id="set-socials" class="set-socials"></div>
+      <div class="set-save"><button type="button" id="set-save-socials" class="btn btn--primary">Save Changes</button></div>
+    </div>
+  </div>
+
+  <!-- Preferences panel -->
+  <div class="set-panel" data-panel="preferences" hidden>
+    <div class="card card--flush set-card set-pref-card">
+      <div class="set-pref">
+        <div>
+          <div class="set-pref__title">Notification Sounds</div>
+          <p class="set-pref__desc">Play a sound when new notifications arrive.</p>
+        </div>
+        <button type="button" id="set-sounds" class="switch" role="switch" aria-label="Notification sounds"><span class="switch__thumb"></span></button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/shell.js"></script>

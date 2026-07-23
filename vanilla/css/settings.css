@@ -1,0 +1,43 @@
+/* =============================================================================
+   EarnLoop — Account Settings styles (plain CSS, ported from SettingsPage.tsx)
+   ============================================================================= */
+
+.set-panel { margin-top: 1.5rem; }
+.set-panel[hidden] { display: none; }
+.set-card { max-width: 42rem; }
+
+/* --- Profile tab --------------------------------------------------------- */
+/* Profile picture uploader */
+.set-avatar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.set-avatar { width: 4.5rem; height: 4.5rem; cursor: pointer; overflow: hidden; }
+.set-avatar .avatar__fallback { font-size: 1.5rem; }
+.set-avatar-file { display: none; }
+.set-avatar__overlay {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-pill);
+    background-color: rgba(0, 0, 0, 0.45); color: #fff;
+    opacity: 0; transition: opacity 0.15s ease;
+}
+.set-avatar:hover .set-avatar__overlay,
+.set-avatar:focus-within .set-avatar__overlay { opacity: 1; }
+.set-avatar__overlay svg { width: 1.25rem; height: 1.25rem; }
+.set-avatar-title { font-size: 0.875rem; font-weight: 600; color: var(--foreground); }
+.set-avatar-desc { margin: 0.125rem 0 0.5rem; font-size: 0.75rem; color: var(--muted-foreground); }
+.set-avatar-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.set-grid { display: grid; gap: 1rem; }
+@media (min-width: 640px) { .set-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.set-col-2 { grid-column: 1 / -1; }
+.set-cats { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.set-save { margin-top: 1.5rem; display: flex; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 1rem; }
+
+/* --- Social accounts tab (rows use shared .social-row from components.css) - */
+.set-socials { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* --- Preferences tab ----------------------------------------------------- */
+.set-pref-card { gap: 0; padding-block: 0; }
+.set-pref { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem; }
+.set-pref__title { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; color: var(--foreground); }
+.set-pref__desc { margin-top: 0.125rem; font-size: 0.875rem; color: var(--muted-foreground); }

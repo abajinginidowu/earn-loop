@@ -1,0 +1,25 @@
+/* =============================================================================
+   EarnLoop — Onboarding styles (plain CSS, ported from OnboardingPage.tsx)
+   Standalone centered 3-step wizard (no app shell).
+   ============================================================================= */
+
+.ob { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 1.5rem; background-color: var(--background); }
+.ob-card { width: 100%; max-width: 32rem; padding: 2rem; }
+
+.ob-progress { margin-bottom: 2rem; }
+.ob-progress__meta { margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-weight: 500; color: var(--muted-foreground); }
+
+.ob-step { animation: cc-fade 0.25s ease; }
+.ob-step[hidden] { display: none; }
+.ob-title { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; text-transform: uppercase; color: var(--foreground); }
+.ob-desc { margin-top: 0.375rem; font-size: 0.875rem; color: var(--muted-foreground); }
+
+.ob-field { margin-top: 1.5rem; }
+.ob-field .field__label { margin-bottom: 0.375rem; display: block; }
+.ob-cats { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ob-socials { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+
+.ob-foot { margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; }
+
+/* reuse the create-campaign fade keyframe if that sheet isn't loaded */
+@keyframes cc-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }

@@ -1,0 +1,141 @@
+<!-- =============================================================================
+     EarnLoop — Dashboard (vanilla HTML + plain CSS, no Tailwind)
+     Layout & copy here; numbers/lists filled by js/dashboard.js from the store.
+     Styles: css/theme.css · base.css · components.css · app.css · dashboard.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard | EarnLoop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/dashboard.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<main data-app-main data-active="dashboard">
+  <!-- Page header -->
+  <div class="page-header">
+    <div>
+      <h1 id="dash-greeting" class="page-header__title">Welcome back</h1>
+      <p class="page-header__desc">Here's how your earning and campaigns are performing.</p>
+    </div>
+    <div class="page-header__actions">
+      <a href="wallet.html?add=1" class="btn btn--secondary"><i data-lucide="plus"></i> Add Funds</a>
+      <a href="tasks.html" class="btn btn--secondary">Browse Tasks</a>
+      <a href="create-campaign.html" class="btn btn--primary"><i data-lucide="wallet"></i> Create Campaign</a>
+    </div>
+  </div>
+
+  <div class="dash-stack">
+    <!-- Profile card -->
+    <div class="card card--pad-lg">
+      <div class="dash-profile__row">
+        <div class="dash-profile__id">
+          <span class="avatar avatar--lg"><span id="dash-avatar" class="avatar__fallback">AO</span></span>
+          <div>
+            <div class="dash-profile__name-row">
+              <span id="dash-name" class="dash-profile__name">Ada Okafor</span>
+              <span id="dash-level" class="badge badge--secondary">Level 12</span>
+            </div>
+            <div class="dash-profile__xp">
+              <div class="progress"><div id="dash-xp-bar" class="progress__bar" style="width:0%"></div></div>
+              <span id="dash-xp-pct" class="dash-profile__xp-pct">0%</span>
+            </div>
+          </div>
+        </div>
+        <div class="dash-profile__totals">
+          <div class="dash-profile__total"><b id="dash-points">0</b><span>Points</span></div>
+          <div class="dash-profile__total"><b id="dash-cash">$0.00</b><span>Cash Balance</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="stat-grid">
+      <div class="card card--pad">
+        <div class="stat-card__top"><span class="stat-card__ic"><i data-lucide="coins"></i></span><span class="stat-card__trend">+12%</span></div>
+        <span id="stat-earnings" class="stat-card__value" data-count="0">0</span>
+        <div class="stat-card__label">Recent Earnings (pts)</div>
+      </div>
+      <div class="card card--pad">
+        <div class="stat-card__top"><span class="stat-card__ic"><i data-lucide="list-checks"></i></span></div>
+        <span id="stat-tasks" class="stat-card__value" data-count="0">0</span>
+        <div class="stat-card__label">Tasks Completed Today</div>
+      </div>
+      <div class="card card--pad">
+        <div class="stat-card__top"><span class="stat-card__ic"><i data-lucide="flame"></i></span></div>
+        <span id="stat-streak" class="stat-card__value" data-count="0" data-suffix=" days">0</span>
+        <div class="stat-card__label">Daily Streak</div>
+      </div>
+      <div class="card card--pad">
+        <div class="stat-card__top"><span class="stat-card__ic"><i data-lucide="trophy"></i></span></div>
+        <span id="stat-rank" class="stat-card__value" data-count="0" data-prefix="#">#0</span>
+        <div class="stat-card__label">Leaderboard Rank</div>
+      </div>
+    </div>
+
+    <!-- Performance + leaderboard -->
+    <div class="dash-grid-3">
+      <div class="card card--pad-lg dash-col-2">
+        <div class="dash-card-head">
+          <div>
+            <h3 class="dash-card-title">Performance Overview</h3>
+            <p class="dash-card-sub">Points you've earned each month</p>
+          </div>
+          <span class="badge badge--secondary">Last 6 months</span>
+        </div>
+        <div><div id="dash-chart" class="dash-chart"></div></div>
+        <div class="dash-camps">
+          <h4 class="dash-camps__h">Your Active Campaigns</h4>
+          <div id="dash-campaigns" class="dash-camp-list"></div>
+        </div>
+      </div>
+
+      <div class="card card--pad-lg">
+        <div class="dash-card-head">
+          <h3 class="dash-card-title">Leaderboard</h3>
+          <i data-lucide="trophy"></i>
+        </div>
+        <div id="dash-leaderboard" class="dash-lb"></div>
+        <h3 class="dash-card-title dash-heading-mt">Weekly Challenge</h3>
+        <div id="dash-challenge"></div>
+      </div>
+    </div>
+
+    <!-- Featured + notifications -->
+    <div class="dash-grid-3">
+      <!-- Filled by dashboard.js from the featured_videos table (admin-uploaded). -->
+      <div id="dash-featured" class="card card--flush dash-col-2">
+        <div class="dash-featured__video">
+          <span class="badge badge--default ad-modal__badge">Featured</span>
+          <button type="button" class="dash-featured__play"><i data-lucide="play-circle"></i></button>
+        </div>
+        <div class="dash-featured__body">
+          <h3 class="dash-featured__title">Nothing featured yet</h3>
+          <p class="dash-featured__desc">Announcements and sponsored videos from the EarnLoop team will show up here.</p>
+        </div>
+      </div>
+
+      <div class="card card--pad-lg">
+        <div class="dash-card-head">
+          <h3 class="dash-card-title">Notifications</h3>
+          <i data-lucide="bell"></i>
+        </div>
+        <div id="dash-notifications" class="dash-notifs"></div>
+        <a href="notifications.html" class="btn btn--ghost btn--full dash-notifs-more">View All <i data-lucide="arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/shell.js"></script>

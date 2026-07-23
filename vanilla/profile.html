@@ -1,0 +1,92 @@
+<!-- =============================================================================
+     EarnLoop — Profile (vanilla HTML + plain CSS, no Tailwind)
+     Public profile: identity, XP, stats, and achievements from the store.
+     Styles: css/theme.css · base.css · components.css · app.css · profile.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profile | EarnLoop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/profile.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<main data-app-main data-active="profile">
+  <!-- Page header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-header__title">Profile</h1>
+      <p class="page-header__desc">Your public presence on EarnLoop.</p>
+    </div>
+    <div class="page-header__actions">
+      <a href="settings.html" class="btn btn--secondary"><i data-lucide="pencil"></i> Edit Profile</a>
+    </div>
+  </div>
+
+  <!-- Identity card -->
+  <div class="card card--pad-lg">
+    <div class="prof-header">
+      <div class="prof-id">
+        <span class="avatar avatar--lg"><span id="prof-avatar" class="avatar__fallback">AO</span></span>
+        <div>
+          <div class="prof-id__name-row">
+            <span id="prof-name" class="prof-id__name"></span>
+            <span id="prof-level" class="badge badge--secondary">Level 0</span>
+          </div>
+          <div id="prof-handle" class="prof-id__handle"></div>
+          <div id="prof-meta" class="prof-id__meta"></div>
+        </div>
+      </div>
+      <div class="prof-xp">
+        <div class="prof-xp__row"><span id="prof-xp">0 XP</span><span id="prof-xp-next">0 XP</span></div>
+        <div class="progress"><div id="prof-xp-bar" class="progress__bar" style="width:0%"></div></div>
+        <div id="prof-xp-note" class="prof-xp__note">0% to Level 0</div>
+      </div>
+    </div>
+    <p id="prof-bio" class="prof-bio" hidden></p>
+    <div id="prof-cats" class="prof-cats"></div>
+  </div>
+
+  <!-- Mini stats -->
+  <div class="prof-stats">
+    <div class="card card--pad">
+      <span class="prof-stat__ic prof-stat__ic--points"><i data-lucide="coins"></i></span>
+      <div id="prof-points" class="prof-stat__value">0</div>
+      <div class="prof-stat__label">Points</div>
+    </div>
+    <div class="card card--pad">
+      <span class="prof-stat__ic prof-stat__ic--cash"><i data-lucide="wallet"></i></span>
+      <div id="prof-cash" class="prof-stat__value">$0.00</div>
+      <div class="prof-stat__label">Cash Balance</div>
+    </div>
+    <div class="card card--pad">
+      <span class="prof-stat__ic prof-stat__ic--streak"><i data-lucide="flame"></i></span>
+      <div id="prof-streak" class="prof-stat__value">0</div>
+      <div class="prof-stat__label">Day Streak</div>
+    </div>
+    <div class="card card--pad">
+      <span class="prof-stat__ic prof-stat__ic--badges"><i data-lucide="award"></i></span>
+      <div id="prof-badges" class="prof-stat__value">0</div>
+      <div class="prof-stat__label">Badges Earned</div>
+    </div>
+  </div>
+
+  <!-- Achievements -->
+  <div class="card card--pad-lg prof-ach">
+    <h3 class="section-title">Achievements</h3>
+    <div id="prof-ach-grid" class="prof-ach__grid"></div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/shell.js"></script>

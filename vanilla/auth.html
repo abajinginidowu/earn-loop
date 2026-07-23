@@ -1,0 +1,150 @@
+<!-- =============================================================================
+     EarnLoop — Auth (vanilla HTML + plain CSS, no Tailwind)
+     Standalone login/register + email OTP step. No app shell.
+     Styles: css/theme.css · base.css · components.css · auth.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign In | EarnLoop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/auth.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<div class="auth">
+  <!-- Left: forms -->
+  <div class="auth-left">
+    <div class="auth-brand">
+      <a href="landing.html" class="auth-logo">
+        <span class="auth-logo__mark"><i data-lucide="sparkles"></i></span>
+        <span class="wordmark auth-logo__text">EarnLoop</span>
+      </a>
+    </div>
+
+    <div class="auth-body">
+      <!-- Step: form -->
+      <div id="auth-form-step" class="auth-step">
+        <div class="tabs auth-tabs">
+          <div id="auth-tabs" class="tabs__list" role="tablist">
+            <button type="button" class="tabs__trigger is-active" data-tab="login">Log In</button>
+            <button type="button" class="tabs__trigger" data-tab="register">Register</button>
+          </div>
+        </div>
+
+        <!-- Login panel -->
+        <div class="auth-tabpanel" data-panel="login">
+          <h1 class="auth-heading">Welcome back</h1>
+          <p class="auth-sub">Log in to keep earning and promoting.</p>
+          <form id="login-form" class="auth-form" novalidate>
+            <div class="field">
+              <label class="field__label" for="login-email">Email</label>
+              <input id="login-email" class="input" type="email" placeholder="you@example.com" />
+              <p class="auth-error" data-err="login-email" hidden></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="login-password">Password</label>
+              <input id="login-password" class="input" type="password" placeholder="••••••••" />
+              <p class="auth-error" data-err="login-password" hidden></p>
+            </div>
+            <p class="auth-error" data-err="login-general" hidden></p>
+            <button type="submit" class="btn btn--primary auth-submit">Log In <i data-lucide="arrow-right"></i></button>
+          </form>
+        </div>
+
+        <!-- Register panel -->
+        <div class="auth-tabpanel" data-panel="register" hidden>
+          <h1 class="auth-heading">Create your account</h1>
+          <p class="auth-sub">Start earning points in minutes.</p>
+          <form id="register-form" class="auth-form" novalidate>
+            <div class="field">
+              <label class="field__label" for="reg-name">Full Name</label>
+              <input id="reg-name" class="input" type="text" placeholder="Ada Okafor" />
+              <p class="auth-error" data-err="reg-name" hidden></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="reg-username">Username</label>
+              <input id="reg-username" class="input" type="text" placeholder="ada.creates" />
+              <p class="auth-error" data-err="reg-username" hidden></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="reg-email">Email</label>
+              <input id="reg-email" class="input" type="email" placeholder="you@example.com" />
+              <p class="auth-error" data-err="reg-email" hidden></p>
+            </div>
+            <div class="auth-form__row2">
+              <div class="field">
+                <label class="field__label" for="reg-password">Password</label>
+                <input id="reg-password" class="input" type="password" placeholder="••••••••" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="reg-confirm">Confirm</label>
+                <input id="reg-confirm" class="input" type="password" placeholder="••••••••" />
+              </div>
+            </div>
+            <p class="auth-error auth-error--tight" data-err="reg-password" hidden></p>
+            <label class="auth-terms">
+              <input id="reg-terms" class="checkbox" type="checkbox" />
+              I agree to the Terms of Service and Privacy Policy
+            </label>
+            <p class="auth-error auth-error--tight" data-err="reg-terms" hidden></p>
+            <p class="auth-error" data-err="reg-general" hidden></p>
+            <button type="submit" class="btn btn--primary auth-submit">Create Account <i data-lucide="arrow-right"></i></button>
+          </form>
+        </div>
+
+        <div class="auth-divider">
+          <div class="auth-divider__line"></div>
+          <span class="auth-divider__text">OR</span>
+          <div class="auth-divider__line"></div>
+        </div>
+
+        <button type="button" id="google-btn" class="btn btn--outline auth-google">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path fill="#4285F4" d="M23.5 12.27c0-.82-.07-1.6-.2-2.36H12v4.47h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.87c2.27-2.09 3.56-5.17 3.56-8.74z" />
+            <path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.94-2.9l-3.87-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.28v3.11A12 12 0 0 0 12 24z" />
+            <path fill="#FBBC05" d="M5.27 14.29a7.2 7.2 0 0 1 0-4.58V6.6H1.28a12 12 0 0 0 0 10.8z" />
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.28 6.6l3.99 3.11C6.22 6.86 8.87 4.75 12 4.75z" />
+          </svg>
+          Continue with Google
+        </button>
+      </div>
+
+      <!-- Step: OTP -->
+      <div id="auth-otp-step" class="auth-step" hidden>
+        <button type="button" id="otp-back" class="auth-back"><i data-lucide="arrow-left"></i> Back</button>
+        <h1 class="auth-heading">Verify your email</h1>
+        <p class="auth-sub">Enter the 6-digit code we sent to <span id="otp-email">your email</span>.</p>
+        <div class="auth-otp">
+          <input id="otp-0" class="input auth-otp__input" inputmode="numeric" maxlength="1" />
+          <input id="otp-1" class="input auth-otp__input" inputmode="numeric" maxlength="1" />
+          <input id="otp-2" class="input auth-otp__input" inputmode="numeric" maxlength="1" />
+          <input id="otp-3" class="input auth-otp__input" inputmode="numeric" maxlength="1" />
+          <input id="otp-4" class="input auth-otp__input" inputmode="numeric" maxlength="1" />
+          <input id="otp-5" class="input auth-otp__input" inputmode="numeric" maxlength="1" />
+        </div>
+        <button type="button" id="otp-verify" class="btn btn--primary auth-submit" disabled>Verify &amp; Continue <i data-lucide="arrow-right"></i></button>
+        <p class="auth-error" data-err="otp" hidden></p>
+        <p class="auth-resend">Didn't get a code? <button type="button" id="otp-resend" class="auth-resend__btn">Resend</button></p>
+        <p id="otp-resend-note" class="auth-resend" hidden style="color: var(--success)">A new code has been sent.</p>
+      </div>
+    </div>
+
+    <p class="auth-copyright">© 2026 EarnLoop. All rights reserved.</p>
+  </div>
+
+  <!-- Right: promo image -->
+  <div class="auth-panel">
+    <img class="auth-panel__img" src="images/login.png" alt="Happy EarnLoop user holding a phone showing the dashboard" />
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/auth.js"></script>

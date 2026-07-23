@@ -1,0 +1,62 @@
+<!-- =============================================================================
+     EarnLoop — Create Campaign (vanilla HTML + plain CSS, no Tailwind)
+     Multi-step form + live pricing engine; driven by js/create-campaign.js.
+     Styles: css/theme.css · base.css · components.css · app.css · create-campaign.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create Campaign | EarnLoop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/create-campaign.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<main data-app-main data-active="create-campaign">
+  <!-- Page header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-header__title">Create Campaign</h1>
+      <p class="page-header__desc">Buy followers, streams, installs, or website traffic with automatic pricing.</p>
+    </div>
+  </div>
+
+  <!-- Step progress -->
+  <div class="cc-progress">
+    <div class="cc-progress__meta">
+      <span id="cc-step-count">Step 1 of 5</span>
+      <span id="cc-step-name">Platform</span>
+    </div>
+    <div class="progress"><div id="cc-progress-bar" class="progress__bar" style="width:20%"></div></div>
+  </div>
+
+  <div class="cc-grid">
+    <!-- Main wizard card -->
+    <div class="card card--pad-lg cc-main">
+      <div class="cc-nav">
+        <button type="button" id="cc-back" class="btn btn--ghost" disabled><i data-lucide="arrow-left"></i> Back</button>
+        <button type="button" id="cc-continue" class="btn btn--primary">Continue <i data-lucide="arrow-right"></i></button>
+        <button type="button" id="cc-launch" class="btn btn--primary" hidden>Launch Campaign <i data-lucide="arrow-right"></i></button>
+      </div>
+      <div id="cc-step"></div>
+    </div>
+
+    <!-- Summary rail -->
+    <div class="card card--pad-lg cc-summary">
+      <h4 class="cc-sum-h">Summary</h4>
+      <div id="cc-summary-body"></div>
+    </div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/create-campaign.js"></script>
+<script src="js/shell.js"></script>

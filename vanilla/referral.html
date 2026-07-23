@@ -1,0 +1,81 @@
+<!-- =============================================================================
+     EarnLoop — Referral (vanilla HTML + plain CSS, no Tailwind)
+     Stat cards, referral code/link with copy, and invited-friends table.
+     Styles: css/theme.css · base.css · components.css · app.css · referral.css
+     ============================================================================= -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Referral | EarnLoop</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/referral.css" />
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<main data-app-main data-active="referral">
+  <!-- Page header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-header__title">Referral</h1>
+      <p class="page-header__desc">Invite friends and earn points when they join and complete tasks.</p>
+    </div>
+  </div>
+
+  <!-- Stat cards -->
+  <div class="stat-grid">
+    <div class="card card--pad">
+      <div class="stat-card__top"><span class="stat-card__ic"><i data-lucide="users"></i></span></div>
+      <span id="ref-stat-invited" class="stat-card__value" data-count="0">0</span>
+      <div class="stat-card__label">Total Invited</div>
+    </div>
+    <div class="card card--pad">
+      <div class="stat-card__top"><span class="stat-card__ic"><i data-lucide="user-check"></i></span></div>
+      <span id="ref-stat-joined" class="stat-card__value" data-count="0">0</span>
+      <div class="stat-card__label">Total Joined</div>
+    </div>
+    <div class="card card--pad">
+      <div class="stat-card__top"><span class="stat-card__ic"><i data-lucide="gift"></i></span></div>
+      <span id="ref-stat-earned" class="stat-card__value" data-count="0">0</span>
+      <div class="stat-card__label">Points Earned</div>
+    </div>
+    <div class="card card--pad">
+      <div class="stat-card__top"><span class="stat-card__ic"><i data-lucide="share-2"></i></span></div>
+      <span id="ref-stat-reward" class="stat-card__value" data-count="0" data-suffix=" pts">0</span>
+      <div class="stat-card__label">Reward Per Referral</div>
+    </div>
+  </div>
+
+  <!-- Referral code card -->
+  <div class="card card--pad-lg ref-code">
+    <h3 class="section-title">Your Referral Code</h3>
+    <p id="ref-code-desc" class="ref-code__desc"></p>
+    <div class="ref-code__row">
+      <div class="ref-code__group">
+        <input id="ref-code" class="input input--mono" type="text" readonly />
+        <button type="button" id="ref-copy-code" class="btn btn--secondary btn--icon" aria-label="Copy code"><i data-lucide="copy"></i></button>
+      </div>
+      <div class="ref-code__group">
+        <input id="ref-link" class="input" type="text" readonly />
+        <button type="button" id="ref-copy-link" class="btn btn--secondary btn--icon" aria-label="Copy link"><i data-lucide="copy"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invited friends -->
+  <div class="card card--flush ref-history">
+    <div class="ref-history__head"><h3 class="section-title">Invited Friends</h3></div>
+    <div id="ref-history-body"></div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/referral.js"></script>
+<script src="js/shell.js"></script>

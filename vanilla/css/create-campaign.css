@@ -1,0 +1,92 @@
+/* =============================================================================
+   EarnLoop — Create Campaign styles (plain CSS, ported from CreateCampaignPage.tsx)
+   ============================================================================= */
+
+/* --- Step progress ------------------------------------------------------- */
+.cc-progress { margin-bottom: 2rem; }
+.cc-progress__meta { margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-weight: 500; color: var(--muted-foreground); }
+
+/* --- Two-column layout --------------------------------------------------- */
+.cc-grid { display: grid; gap: 1.5rem; }
+@media (min-width: 1024px) { .cc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; } }
+.cc-main { gap: 0; }
+@media (min-width: 1024px) { .cc-main { grid-column: span 2 / span 2; } }
+
+/* --- Animated step content ---------------------------------------------- */
+.cc-fade { animation: cc-fade 0.25s ease; }
+@keyframes cc-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.cc-step-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; text-transform: uppercase; color: var(--foreground); }
+.cc-step-desc { margin-top: 0.25rem; font-size: 0.875rem; color: var(--muted-foreground); }
+.cc-review-note { margin-top: 1rem; }
+
+/* Describe step — screenshot uploader */
+.cc-req { color: var(--destructive); }
+.cc-shot-file { display: none; }
+.cc-shot-drop {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem;
+    border: 1px dashed var(--border); border-radius: var(--radius-lg);
+    padding: 1.5rem; text-align: center; cursor: pointer;
+    color: var(--muted-foreground); transition: border-color 0.15s, background-color 0.15s;
+}
+.cc-shot-drop:hover { border-color: var(--primary); background-color: var(--muted); }
+.cc-shot-drop__ic { display: flex; }
+.cc-shot-drop__ic svg { width: 1.5rem; height: 1.5rem; }
+.cc-shot-drop__title { font-size: 0.875rem; font-weight: 600; color: var(--foreground); }
+.cc-shot-drop__desc { font-size: 0.75rem; }
+.cc-shot { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+.cc-shot__img { max-width: 100%; max-height: 220px; border-radius: var(--radius-lg); border: 1px solid var(--border); object-fit: contain; }
+
+/* --- Step 0: platform grid ---------------------------------------------- */
+.cc-platforms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+@media (min-width: 640px) { .cc-platforms { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pick--platform { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; text-align: center; background-color: #FBFBF7; box-shadow: var(--shadow-md); }
+.cc-platform__ic { display: flex; width: 2.5rem; height: 2.5rem; align-items: center; justify-content: center; }
+.cc-platform__ic svg, .cc-platform__ic img { width: 1.75rem; height: 1.75rem; object-fit: contain; }
+.cc-platform__label { font-size: 0.875rem; font-weight: 500; color: var(--foreground); }
+
+/* --- Step 1: configure --------------------------------------------------- */
+/* Task-type pills (Followers / Likes / Comments / Streams / …) */
+.cc-tasktypes { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.cc-tasktype { cursor: pointer; }
+
+.cc-tiers, .cc-durations { margin-top: 1rem; display: grid; gap: 0.75rem; }
+@media (min-width: 640px) { .cc-tiers, .cc-durations { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pick--tier, .pick--duration { padding: 1rem; text-align: left; }
+.cc-tier__qty { font-family: var(--font-heading); font-size: 1.125rem; font-weight: 800; letter-spacing: -0.01em; color: var(--foreground); }
+.cc-tier__unit { font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; color: var(--muted-foreground); }
+.cc-tier__price { margin-top: 0.5rem; font-size: 0.875rem; font-weight: 500; color: var(--primary); }
+.cc-duration__label { font-size: 0.875rem; font-weight: 600; color: var(--foreground); }
+.cc-duration__price { margin-top: 0.5rem; font-size: 0.875rem; font-weight: 500; color: var(--primary); }
+.cc-config-perunit { margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+.cc-config-perunit .cc-durations { margin-top: 0; }
+.cc-field-mt { margin-top: 1rem; }
+.cc-hint { font-size: 0.75rem; color: var(--muted-foreground); }
+
+/* --- Step 2: targeting --------------------------------------------------- */
+.cc-targeting-grid { margin-top: 1rem; display: grid; gap: 1rem; }
+@media (min-width: 640px) { .cc-targeting-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* --- Step 3: review & pay ------------------------------------------------ */
+.cc-review-box { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; border-radius: var(--radius-xl); background-color: var(--muted); padding: 1rem; font-size: 0.875rem; }
+.cc-review-row { display: flex; justify-content: space-between; }
+.cc-review-row > span:first-child { color: var(--muted-foreground); }
+.cc-review-row > span:last-child { font-weight: 500; color: var(--foreground); }
+.cc-review-row--total { border-top: 1px solid var(--border); padding-top: 0.75rem; }
+.cc-review-row--total > span:last-child { font-weight: 600; }
+.cc-pay-h { margin-top: 1.5rem; font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; color: var(--muted-foreground); }
+.cc-pay-grid { margin-top: 0.75rem; } /* pay-option/pay-grid live in components.css */
+.cc-warn { margin-top: 0.5rem; font-size: 0.75rem; color: var(--warning); }
+
+/* --- Top nav (back / continue) ------------------------------------------- */
+.cc-nav { margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+
+/* --- Summary card (right rail) ------------------------------------------- */
+.cc-sum-h { font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; color: var(--muted-foreground); }
+.cc-sum-body { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem; }
+.cc-sum-row { display: flex; align-items: center; gap: 0.5rem; }
+.cc-sum-unit, .cc-sum-qty { color: var(--muted-foreground); }
+.cc-sum-cost { border-radius: var(--radius-lg); background-color: var(--muted); padding: 0.75rem; }
+.cc-sum-cost__amt { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: var(--foreground); }
+.cc-sum-cost__pts { font-size: 0.75rem; color: var(--muted-foreground); }
+.cc-sum-empty { margin-top: 0.75rem; font-size: 0.875rem; color: var(--muted-foreground); }
