@@ -201,7 +201,12 @@
     signInWithGoogle: function (redirectTo) {
       return client.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: redirectTo || absUrl("auth-callback.html") },
+        options: {
+          redirectTo: redirectTo || absUrl("auth-callback.html"),
+          // Always show Google's account chooser instead of silently
+          // reusing an existing Google session.
+          queryParams: { prompt: "select_account" },
+        },
       });
     },
 
