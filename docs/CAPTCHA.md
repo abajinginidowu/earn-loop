@@ -1,8 +1,12 @@
 # CAPTCHA (Cloudflare Turnstile)
 
-Turnstile is wired into the auth page and Supabase verifies the token server-side.
-Right now it runs on **Cloudflare's public test key, which passes everyone** — the
-plumbing is real, the protection is not. Follow this page to switch it on properly.
+> **Status: OFF.** `ENABLED = false` in [`vanilla/js/captcha.js`](../vanilla/js/captcha.js).
+> Nothing loads from Cloudflare, no widget renders, and auth behaves exactly as it
+> did before CAPTCHA existed. The wiring is all in place — turning it on is one line
+> plus a Supabase setting.
+
+Turnstile is wired into the auth page, and Supabase verifies the token server-side
+once both ends are switched on. Follow this page to enable it.
 
 | File | Role |
 |---|---|
@@ -35,21 +39,29 @@ signup only and leave login alone.
 ### 1. Create the widget
 
 1. <https://dash.cloudflare.com> → **Turnstile** → **Add widget**
-2. Add every hostname that serves the app:
+2. Add every hostname that serves the app, as bare hostnames — no `https://`,
+   no port, no trailing slash:
    - `your-site.netlify.app`
    - `localhost` (so local dev keeps working)
 3. Widget mode: **Managed** (Cloudflare decides when to challenge)
 4. Copy both keys. The **site key** is public; the **secret key** is not.
 
-### 2. Put the site key in the frontend
+If the hostname field rejects what you type, it wants a real registered domain.
+`localhost` and some free subdomains can be refused depending on the account —
+add whichever hostname it accepts, and note that the widget only works on the
+hostnames listed here.
 
-In [`vanilla/js/captcha.js`](../vanilla/js/captcha.js), replace:
+### 2. Turn it on in the frontend
+
+In [`vanilla/js/captcha.js`](../vanilla/js/captcha.js):
 
 ```js
-var SITE_KEY = "1x00000000000000000000AA";   // test key — passes everyone
+var ENABLED  = false;                        // ← set to true
+var SITE_KEY = "1x00000000000000000000AA";   // ← your real site key
 ```
 
-with your real site key. This one is meant to be public; it ships in the browser.
+The site key is meant to be public; it ships in the browser. The secret key never
+goes in this repo.
 
 ### 3. Deploy the frontend — before touching Supabase
 

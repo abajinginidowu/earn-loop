@@ -6,22 +6,29 @@
    hands out tokens; js/auth.js passes them to Supabase.
 
    ---------------------------------------------------------------------------
-   SETUP — replace SITE_KEY below with your own key
+   CURRENTLY OFF — set ENABLED = true to switch it on
    ---------------------------------------------------------------------------
-   The key shipped here is Cloudflare's public TEST key: it always passes and
-   never shows a challenge, so the flow is testable before you have an account.
-   It proves nothing about the visitor — it is not protection.
+   With ENABLED false nothing loads from Cloudflare, no widget renders, and every
+   auth call sends no token — exactly as before CAPTCHA existed. The wiring stays
+   in place so turning it on is a one-line change.
 
+   To enable:
      1. https://dash.cloudflare.com → Turnstile → Add widget
-     2. Add your domains (your-site.netlify.app, and localhost for dev)
-     3. Copy the SITE key here, and the SECRET key into Supabase:
+     2. Add your hostnames (e.g. your-site.netlify.app, and localhost for dev)
+     3. Put the SITE key in SITE_KEY below and set ENABLED = true
+     4. Deploy the frontend
+     5. ONLY THEN put the SECRET key into Supabase:
         Authentication → Attack Protection → Enable CAPTCHA, provider Turnstile
 
-   Both sides must agree. See docs/CAPTCHA.md for the rollout order — enabling it
-   in Supabase before this frontend is deployed locks everyone out of signing in.
+   Step 5 must come after step 4: Supabase starts rejecting every login the moment
+   it's enabled, and a browser running the old JavaScript sends no token — so
+   doing it early locks everyone out, including you. See docs/CAPTCHA.md.
    ============================================================================= */
 (function () {
   "use strict";
+
+  // Master switch. false = no Cloudflare script, no widgets, no tokens.
+  var ENABLED = false;
 
   // Cloudflare's always-passes test key. Swap for your real site key.
   var SITE_KEY = "1x00000000000000000000AA";
@@ -64,6 +71,7 @@
 
   /* Render every [data-captcha="<name>"] container on the page. */
   function renderAll() {
+    if (!ENABLED) return Promise.resolve(false);
     var nodes = document.querySelectorAll("[data-captcha]");
     if (!nodes.length) return Promise.resolve(false);
 
@@ -106,6 +114,7 @@
      Turnstile is unavailable, so auth still works if the CDN is blocked — the
      request then fails server-side only if Supabase has CAPTCHA switched on. */
   function token(name, timeoutMs) {
+    if (!ENABLED) return Promise.resolve(null);
     var w = widgets[name];
     if (!w) return Promise.resolve(null);
     if (w.token) return Promise.resolve(w.token);
@@ -128,12 +137,18 @@
   }
 
   window.EL_CAPTCHA = {
+    enabled: ENABLED,
     siteKey: SITE_KEY,
     usingTestKey: isTestKey(),
     renderAll: renderAll,
     token: token,
     reset: reset,
   };
+
+  if (!ENABLED) {
+    console.info("[captcha] CAPTCHA is off (ENABLED = false in js/captcha.js).");
+    return;
+  }
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", renderAll);

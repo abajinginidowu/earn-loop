@@ -16,6 +16,11 @@ dist-ssr
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
 
+# Dead .git left behind when the D: card corrupted a loose object (2026-07-28).
+# Windows can't delete it (damaged FAT32 directory entry); a chkdsk or reformat
+# clears it. The live repo was restored by re-cloning from GitHub.
+.git-broken/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
