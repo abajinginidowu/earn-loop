@@ -75,6 +75,15 @@ never sees the Netlify domain, so that config stays exactly as it is.
 
 ---
 
+## 4. CAPTCHA (optional, but do it in the right order)
+
+Cloudflare Turnstile is wired up but running on a test key that passes everyone.
+To make it real, see [CAPTCHA.md](CAPTCHA.md) — and note the ordering warning
+there: enabling CAPTCHA in Supabase *before* deploying the frontend locks
+everyone, including you, out of signing in.
+
+---
+
 ## Things to know
 
 **The anon key in `vanilla/js/supabase.js` is meant to be public.** It ships in the

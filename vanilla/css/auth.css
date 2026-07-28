@@ -24,7 +24,10 @@
 }
 
 /* --- Left column --------------------------------------------------------- */
-.auth-left { display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem; min-height: 0; }
+/* min-width:0 so this grid item can be narrower than its min-content width —
+   the CAPTCHA widget's 300px floor otherwise stretches the whole column past a
+   320px screen. */
+.auth-left { display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem; min-height: 0; min-width: 0; }
 @media (min-width: 1024px) { .auth-left { overflow-y: auto; } }
 @media (min-width: 640px) { .auth-left { padding: 2rem 2.5rem; } }
 .auth-brand { display: flex; align-items: center; justify-content: space-between; }
@@ -32,7 +35,10 @@
 .auth-logo__mark { display: flex; width: 2rem; height: 2rem; align-items: center; justify-content: center; color: var(--primary); }
 .auth-logo__mark svg { width: 1rem; height: 1rem; }
 .auth-logo__text { font-size: 1.25rem; color: var(--foreground); }
-.auth-body { margin-inline: auto; margin-block: auto; width: 100%; max-width: 24rem; padding-block: 1.5rem; }
+/* min-width:0: as a flex item of .auth-left this would otherwise grow to its
+   min-content width, which the 300px-minimum CAPTCHA widget pushes past the
+   screen on a 320px phone. */
+.auth-body { margin-inline: auto; margin-block: auto; width: 100%; max-width: 24rem; min-width: 0; padding-block: 1.5rem; }
 .auth-copyright { text-align: center; font-size: 0.75rem; color: var(--muted-foreground); }
 @media (min-width: 1024px) { .auth-copyright { text-align: left; } }
 
@@ -51,6 +57,23 @@
 .auth-terms { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.875rem; color: var(--muted-foreground); cursor: pointer; }
 .auth-terms .checkbox { margin-top: 0.125rem; }
 .auth-submit { margin-top: 0.5rem; width: 100%; }
+
+/* --- CAPTCHA (Cloudflare Turnstile) -------------------------------------- */
+/* Cloudflare sizes the widget itself and won't go below 300px wide. min-width:0
+   stops that floor from stretching the form, and overflow:hidden keeps it off
+   the page's scroll width. */
+.auth-captcha { display: flex; justify-content: center; width: 100%; min-width: 0; overflow: hidden; }
+.auth-captcha:empty { display: none; }
+/* interaction-only widgets collapse to nothing until a challenge is needed */
+.auth-captcha--quiet { margin-top: 0.25rem; }
+
+/* Under ~360px the form is narrower than Turnstile's 300px floor, so the widget
+   would be clipped. Scale it to fit instead — the checkbox stays comfortably
+   tappable at this size. */
+@media (max-width: 359px) {
+    .auth-captcha { justify-content: flex-start; }
+    .auth-captcha > * { transform: scale(0.86); transform-origin: left center; }
+}
 
 .auth-divider { margin-block: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
 .auth-divider__line { height: 1px; flex: 1; background-color: var(--border); }

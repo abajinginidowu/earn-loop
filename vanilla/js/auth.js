@@ -94,6 +94,30 @@
     return true;
   }
 
+  /* --- CAPTCHA ----------------------------------------------------------
+     Supabase requires a Turnstile token on signup, login and resend once
+     CAPTCHA is switched on in the dashboard. captchaToken() resolves null
+     rather than hanging when Turnstile is blocked or absent — the request is
+     then simply refused server-side, which is the correct failure direction. */
+  var CAP = window.EL_CAPTCHA;
+  function captchaToken(name) {
+    return CAP ? CAP.token(name) : Promise.resolve(null);
+  }
+  function captchaReset(name) {
+    if (CAP) CAP.reset(name);
+  }
+  // Supabase's wording for a rejected/missing token is opaque; say what to do.
+  function isCaptchaError(error) {
+    var m = (error && (error.message || error.error_description) || "").toLowerCase();
+    return m.indexOf("captcha") !== -1;
+  }
+  function authErrText(error) {
+    if (isCaptchaError(error)) {
+      return "Verification failed. Please wait for the checkbox to finish, then try again.";
+    }
+    return errText(error);
+  }
+
   /* --- Log in ----------------------------------------------------------- */
   $("login-form").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -107,22 +131,30 @@
 
     var btn = this.querySelector('button[type="submit"]');
     setBusy(btn, true, "Logging in…");
-    SB.signIn(email, pw).then(function (res) {
-      if (res.error) { setBusy(btn, false); showErr("login-general", errText(res.error)); return; }
-      // Supabase can't refuse the token, so a suspended/banned account is signed
-      // back out here (and refused by the database for anything that matters).
-      SB.accountStatus().then(function (status) {
-        if (status === "suspended" || status === "banned") {
-          SB.signOut().then(function () {
-            setBusy(btn, false);
-            showErr("login-general", blockedText(status));
-          });
-          return;
-        }
-        // First-timers who never finished the profile steps go to onboarding.
-        SB.onboardTarget().then(function (page) { window.location.href = page; });
+    captchaToken("login").then(function (cap) {
+      return SB.signIn(email, pw, cap).then(function (res) {
+        // The token is single-use — burn it whatever the outcome.
+        captchaReset("login");
+        if (res.error) { setBusy(btn, false); showErr("login-general", authErrText(res.error)); return; }
+        // Supabase can't refuse the token, so a suspended/banned account is signed
+        // back out here (and refused by the database for anything that matters).
+        SB.accountStatus().then(function (status) {
+          if (status === "suspended" || status === "banned") {
+            SB.signOut().then(function () {
+              setBusy(btn, false);
+              showErr("login-general", blockedText(status));
+            });
+            return;
+          }
+          // First-timers who never finished the profile steps go to onboarding.
+          SB.onboardTarget().then(function (page) { window.location.href = page; });
+        });
       });
-    }).catch(function (err) { setBusy(btn, false); showErr("login-general", errText(err)); });
+    }).catch(function (err) {
+      captchaReset("login");
+      setBusy(btn, false);
+      showErr("login-general", authErrText(err));
+    });
   });
 
   /* --- Register (email + password) -------------------------------------- */
@@ -147,17 +179,24 @@
 
     var btn = this.querySelector('button[type="submit"]');
     setBusy(btn, true, "Creating account…");
-    SB.signUp(email, pw, { full_name: name, username: username }).then(function (res) {
+    captchaToken("register").then(function (cap) {
+      return SB.signUp(email, pw, { full_name: name, username: username }, cap).then(function (res) {
+        captchaReset("register");   // single-use token
+        setBusy(btn, false);
+        if (res.error) { showErr("reg-general", authErrText(res.error)); return; }
+        pendingEmail = email;
+        // When "Confirm email" is OFF in Supabase, signUp returns an active session
+        // (the user is already verified) — skip the 6-digit step and go straight to
+        // onboarding. When it's re-enabled later, session is null → show the OTP step.
+        var session = res.data && res.data.session;
+        if (session) { window.location.href = "onboarding.html"; return; }
+        goToVerify(email);
+      });
+    }).catch(function (err) {
+      captchaReset("register");
       setBusy(btn, false);
-      if (res.error) { showErr("reg-general", errText(res.error)); return; }
-      pendingEmail = email;
-      // When "Confirm email" is OFF in Supabase, signUp returns an active session
-      // (the user is already verified) — skip the 6-digit step and go straight to
-      // onboarding. When it's re-enabled later, session is null → show the OTP step.
-      var session = res.data && res.data.session;
-      if (session) { window.location.href = "onboarding.html"; return; }
-      goToVerify(email);
-    }).catch(function (err) { setBusy(btn, false); showErr("reg-general", errText(err)); });
+      showErr("reg-general", authErrText(err));
+    });
   });
 
   /* --- Google (Gmail) OAuth --------------------------------------------- */
@@ -234,10 +273,19 @@
       showErr("otp", "");
       if (otpInputs[0]) otpInputs[0].focus();
       if (!SB || !SB.configured) { showErr("otp", "Auth isn't connected yet (see js/supabase.js)."); return; }
-      SB.resendSignupCode(pendingEmail).then(function (res) {
-        var note = $("otp-resend-note");
-        if (res && res.error) { showErr("otp", res.error.message); return; }
-        if (note) { note.hidden = false; setTimeout(function () { note.hidden = true; }, 3000); }
+      setBusy(resendBtn, true, "Sending…");
+      captchaToken("resend").then(function (cap) {
+        return SB.resendSignupCode(pendingEmail, cap).then(function (res) {
+          captchaReset("resend");   // single-use token
+          setBusy(resendBtn, false);
+          var note = $("otp-resend-note");
+          if (res && res.error) { showErr("otp", authErrText(res.error)); return; }
+          if (note) { note.hidden = false; setTimeout(function () { note.hidden = true; }, 3000); }
+        });
+      }).catch(function (err) {
+        captchaReset("resend");
+        setBusy(resendBtn, false);
+        showErr("otp", authErrText(err));
       });
     });
   }

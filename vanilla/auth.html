@@ -53,6 +53,7 @@
               <input id="login-password" class="input" type="password" placeholder="••••••••" />
               <p class="auth-error" data-err="login-password" hidden></p>
             </div>
+            <div class="auth-captcha" data-captcha="login"></div>
             <p class="auth-error" data-err="login-general" hidden></p>
             <button type="submit" class="btn btn--primary auth-submit">Log In <i data-lucide="arrow-right"></i></button>
           </form>
@@ -94,6 +95,7 @@
               I agree to the Terms of Service and Privacy Policy
             </label>
             <p class="auth-error auth-error--tight" data-err="reg-terms" hidden></p>
+            <div class="auth-captcha" data-captcha="register"></div>
             <p class="auth-error" data-err="reg-general" hidden></p>
             <button type="submit" class="btn btn--primary auth-submit">Create Account <i data-lucide="arrow-right"></i></button>
           </form>
@@ -132,6 +134,9 @@
         <button type="button" id="otp-verify" class="btn btn--primary auth-submit" disabled>Verify &amp; Continue <i data-lucide="arrow-right"></i></button>
         <p class="auth-error" data-err="otp" hidden></p>
         <p class="auth-resend">Didn't get a code? <button type="button" id="otp-resend" class="auth-resend__btn">Resend</button></p>
+        <!-- Invisible unless Cloudflare needs a challenge; Supabase requires a
+             token on /resend just as it does on signup. -->
+        <div class="auth-captcha auth-captcha--quiet" data-captcha="resend" data-captcha-appearance="interaction-only"></div>
         <p id="otp-resend-note" class="auth-resend" hidden style="color: var(--success)">A new code has been sent.</p>
       </div>
     </div>
@@ -147,4 +152,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
+<script src="js/captcha.js"></script>
 <script src="js/auth.js"></script>

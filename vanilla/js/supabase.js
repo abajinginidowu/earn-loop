@@ -172,27 +172,37 @@
     /* --- Sign up (email + password) ------------------------------------
        Supabase emails a 6-digit code IF the "Confirm signup" email template
        uses {{ .Token }}. `meta` is stored on the user (full_name, username). */
-    signUp: function (email, password, meta) {
+    signUp: function (email, password, meta, captchaToken) {
       return client.auth.signUp({
         email: email,
         password: password,
-        options: { data: meta || {} },
+        options: { data: meta || {}, captchaToken: captchaToken || undefined },
       });
     },
 
     // Confirm the 6-digit code sent to the email after signUp.
+    // No captchaToken: Supabase doesn't gate /verify — the code itself is the
+    // proof, and it was already issued behind a CAPTCHA.
     verifySignupCode: function (email, token) {
       return client.auth.verifyOtp({ email: email, token: token, type: "signup" });
     },
 
     // Re-send the signup confirmation code.
-    resendSignupCode: function (email) {
-      return client.auth.resend({ type: "signup", email: email });
+    resendSignupCode: function (email, captchaToken) {
+      return client.auth.resend({
+        type: "signup",
+        email: email,
+        options: { captchaToken: captchaToken || undefined },
+      });
     },
 
     /* --- Log in (email + password) ------------------------------------- */
-    signIn: function (email, password) {
-      return client.auth.signInWithPassword({ email: email, password: password });
+    signIn: function (email, password, captchaToken) {
+      return client.auth.signInWithPassword({
+        email: email,
+        password: password,
+        options: { captchaToken: captchaToken || undefined },
+      });
     },
 
     /* --- Google (Gmail) OAuth — one-click redirect, no code -------------
