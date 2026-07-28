@@ -3,18 +3,29 @@
    Standalone split-screen (no app shell).
    ============================================================================= */
 
-html, body { height: 100%; overflow: hidden; }
+/* Mobile/tablet: let the page scroll naturally. The locked full-height split
+   screen below is a desktop layout — forcing it on a phone cut off the bottom
+   of the form, because 100vh is taller than the visible viewport while the
+   browser's URL bar is showing and body scrolling was disabled. */
 .auth {
-  display: grid; height: 100vh; overflow: hidden;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;   /* dvh tracks the URL bar; vh above is the fallback */
   /* Fade the left (warm) and right (cool) section backgrounds into each other */
   background: linear-gradient(to right,
     var(--background) 0%, var(--background) 38%,
     #f3f2f4 62%, #f3f2f4 100%);
 }
-@media (min-width: 1024px) { .auth { grid-template-columns: repeat(2, 1fr); } }
+
+/* Desktop only: pin to the viewport and scroll inside the left column. */
+@media (min-width: 1024px) {
+  html, body { height: 100%; overflow: hidden; }
+  .auth { grid-template-columns: repeat(2, 1fr); height: 100vh; min-height: 0; overflow: hidden; }
+}
 
 /* --- Left column --------------------------------------------------------- */
-.auth-left { display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem; overflow-y: auto; min-height: 0; }
+.auth-left { display: flex; flex-direction: column; justify-content: flex-start; padding: 1.5rem; min-height: 0; }
+@media (min-width: 1024px) { .auth-left { overflow-y: auto; } }
 @media (min-width: 640px) { .auth-left { padding: 2rem 2.5rem; } }
 .auth-brand { display: flex; align-items: center; justify-content: space-between; }
 .auth-logo { display: flex; align-items: center; gap: 0.5rem; }
@@ -52,8 +63,14 @@ html, body { height: 100%; overflow: hidden; }
 .auth-back { margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; color: var(--muted-foreground); background-color: transparent; transition: color 0.15s; }
 .auth-back:hover { color: var(--foreground); }
 .auth-back svg { width: 1rem; height: 1rem; }
-.auth-otp { margin-top: 1.5rem; display: flex; gap: 0.5rem; }
-.auth-otp__input { height: 3rem; width: 2.75rem; text-align: center; font-size: 1.125rem; font-weight: 600; padding-inline: 0; }
+/* The six boxes share the row instead of using a fixed 2.75rem each, which
+   overflowed narrow phones (6 boxes + gaps needed ~304px inside ~272px). */
+.auth-otp { margin-top: 1.5rem; display: flex; gap: 0.375rem; }
+.auth-otp__input {
+  height: 3rem; flex: 1 1 0; width: auto; min-width: 0; max-width: 2.75rem;
+  text-align: center; font-size: 1.125rem; font-weight: 600; padding-inline: 0;
+}
+@media (min-width: 380px) { .auth-otp { gap: 0.5rem; } }
 .auth-resend { margin-top: 1rem; text-align: center; font-size: 0.875rem; color: var(--muted-foreground); }
 .auth-resend__btn { font-weight: 500; color: var(--primary); background-color: transparent; }
 .auth-resend__btn:hover { text-decoration: underline; }

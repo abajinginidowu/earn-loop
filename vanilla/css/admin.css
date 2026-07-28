@@ -3,11 +3,11 @@
    Standalone admin shell (own sidebar/header/footer) + 7 hash-routed sections.
    ============================================================================= */
 
-.admin { display: flex; min-height: 100vh; background-color: var(--background); }
+.admin { display: flex; min-height: 100vh; min-height: 100dvh; background-color: var(--background); }
 
 /* --- Sidebar ------------------------------------------------------------- */
 .admin-sidebar {
-    position: sticky; top: 0; display: none; height: 100vh; width: 16rem; flex-shrink: 0;
+    position: sticky; top: 0; display: none; height: 100vh; height: 100dvh; width: 16rem; flex-shrink: 0;
     flex-direction: column; border-right: 1px solid var(--border); background-color: var(--card); padding-block: 1rem;
 }
 @media (min-width: 1024px) { .admin-sidebar { display: flex; } }
@@ -27,7 +27,7 @@
 .admin-exit svg { width: 18px; height: 18px; }
 
 /* --- Column + header ----------------------------------------------------- */
-.admin-col { display: flex; min-height: 100vh; flex: 1; flex-direction: column; }
+.admin-col { display: flex; min-height: 100vh; min-height: 100dvh; flex: 1; min-width: 0; flex-direction: column; }
 .admin-header { position: sticky; top: 0; z-index: var(--z-header); display: flex; height: 4rem; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--border); background-color: color-mix(in srgb, var(--background) 95%, transparent); padding-inline: 1rem; }
 @media (min-width: 640px) { .admin-header { padding-inline: 1.5rem; } }
 .admin-header__menu { display: flex; }
@@ -35,8 +35,12 @@
 .admin-header__logo { display: flex; }
 @media (min-width: 1024px) { .admin-header__logo { display: none; } }
 .admin-header__spacer { flex: 1; }
-.admin-iconbtn { display: inline-flex; width: 1.75rem; height: 1.75rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: var(--radius-pill); color: var(--foreground); background-color: transparent; transition: background-color 0.15s; }
+.admin-iconbtn { position: relative; display: inline-flex; width: 1.75rem; height: 1.75rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: var(--radius-pill); color: var(--foreground); background-color: transparent; transition: background-color 0.15s; }
 .admin-iconbtn:hover { background-color: var(--muted); }
+/* Grow the touch target to 44px without changing the visible 28px circle. */
+@media (pointer: coarse) {
+    .admin-iconbtn::after { content: ""; position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; transform: translate(-50%, -50%); }
+}
 .admin-iconbtn svg { width: 1rem; height: 1rem; }
 .admin-header__menu svg { width: 1.25rem; height: 1.25rem; }
 .admin-who { display: flex; align-items: center; gap: 0.5rem; }
@@ -45,7 +49,7 @@
 .admin-who__name { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; line-height: 1.2; color: var(--foreground); }
 .admin-who__role { font-size: 0.75rem; line-height: 1.2; color: var(--muted-foreground); }
 
-.admin-main { flex: 1; padding: 1.5rem 1rem 6rem; }
+.admin-main { flex: 1; min-width: 0; padding: 1.5rem 1rem calc(6rem + env(safe-area-inset-bottom, 0px)); }
 @media (min-width: 640px) { .admin-main { padding-inline: 1.5rem; } }
 @media (min-width: 1024px) { .admin-main { padding-inline: 2rem; padding-bottom: 2rem; } }
 
@@ -54,11 +58,11 @@
 @media (min-width: 1024px) { .admin-sheet { display: none; } }
 .admin-sheet[hidden] { display: none; }
 .admin-sheet__backdrop { position: absolute; inset: 0; background-color: rgb(0 0 0 / 0.5); }
-.admin-sheet__panel { position: absolute; left: 0; top: 0; display: flex; height: 100%; width: 18rem; flex-direction: column; border-right: 1px solid var(--border); background-color: var(--card); padding-block: 1rem; box-shadow: var(--shadow-lg); }
+.admin-sheet__panel { position: absolute; left: 0; top: 0; display: flex; height: 100%; width: 18rem; max-width: 85%; flex-direction: column; overflow-y: auto; border-right: 1px solid var(--border); background-color: var(--card); padding-block: 1rem; box-shadow: var(--shadow-lg); }
 
-.admin-footer-nav { position: fixed; inset-inline: 0; bottom: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-around; border-top: 1px solid var(--border); background-color: color-mix(in srgb, var(--card) 95%, transparent); padding-block: 0.5rem; }
+.admin-footer-nav { position: fixed; inset-inline: 0; bottom: 0; z-index: var(--z-header); display: flex; align-items: center; justify-content: space-around; border-top: 1px solid var(--border); background-color: color-mix(in srgb, var(--card) 95%, transparent); padding-top: 0.5rem; padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px)); }
 @media (min-width: 1024px) { .admin-footer-nav { display: none; } }
-.admin-footer-nav__item { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; border-radius: var(--radius-lg); padding: 0.375rem 0.75rem; font-size: 11px; font-weight: 500; color: var(--muted-foreground); }
+.admin-footer-nav__item { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px; gap: 0.25rem; border-radius: var(--radius-lg); padding: 0.375rem 0.75rem; font-size: 11px; font-weight: 500; color: var(--muted-foreground); }
 .admin-footer-nav__item.is-active { color: var(--primary); }
 .admin-footer-nav__item svg { width: 1.25rem; height: 1.25rem; }
 .admin-footer-nav__dot { position: absolute; top: -0.125rem; right: 0.25rem; width: 0.5rem; height: 0.5rem; border-radius: var(--radius-pill); background-color: var(--destructive); }

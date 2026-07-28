@@ -6,6 +6,7 @@
 
 .lp {
     min-height: 100vh;
+    min-height: 100dvh;
     background-color: var(--background);
     color: var(--foreground);
     /* faint hairline dividers used throughout the page */
@@ -52,10 +53,18 @@
 }
 .lp-nav a:hover { background-color: var(--muted); color: var(--foreground); }
 
-.lp-header__actions { display: flex; align-items: center; gap: 0.5rem; width: 20%; justify-content: space-between;}
+/* Percentage width only once the nav is actually shown (768px+); on phones it
+   squeezed the actions into a 20%-wide column. */
+.lp-header__actions { display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end; flex-shrink: 0; }
+/* The 20% reservation only holds once there's room for it — at 768px it left
+   ~153px for two buttons and "Get Started" spilled off the right edge. */
+@media (min-width: 1024px) { .lp-header__actions { width: 20%; justify-content: space-between; } }
 .lp-header__actions .btn { display: none; }
+/* Square and large enough to actually hold its 1.25rem icon — this was 0.75rem
+   wide, so the hamburger overflowed its own button on every phone. */
 .lp-menu-btn {
-    display: inline-flex; width: 0.75rem; height: 1.75rem; align-items: center; justify-content: center;
+    display: inline-flex; width: 2.5rem; height: 2.5rem; flex-shrink: 0;
+    align-items: center; justify-content: center;
     border-radius: var(--radius-pill); border: 1px solid var(--border); background-color: var(--background);
 }
 .lp-menu-btn svg { width: 1.25rem; height: 1.25rem; }
@@ -68,7 +77,7 @@
 .lp-mobile-menu[hidden] { display: none; }
 .lp-mobile-menu__backdrop { position: absolute; inset: 0; background-color: rgb(0 0 0 / 0.5); }
 .lp-mobile-menu__panel {
-    position: absolute; right: 0; top: 0; height: 100%; width: 18rem;
+    position: absolute; right: 0; top: 0; height: 100%; width: 18rem; max-width: 85%; overflow-y: auto;
     border-left: 1px solid var(--border); background-color: var(--background);
     box-shadow: var(--shadow-lg);
 }
@@ -82,11 +91,17 @@
 .lp-mobile-menu__cta { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
 
 /* --- Hero ---------------------------------------------------------------- */
-.lp-hero { position: relative; overflow: hidden; background-color: var(--peach-bg); height: 620px;}
+/* min-height, not height: with a fixed 620px box plus overflow:hidden, the hero
+   CTA buttons were clipped on small phones where the stacked text runs taller. */
+.lp-hero { position: relative; overflow: hidden; background-color: var(--peach-bg); }
+@media (min-width: 640px) { .lp-hero { min-height: 620px; } }
 .lp-hero__grid { display: grid; gap: 2.5rem; padding-top: 3rem; padding-bottom: 1rem; }
 .lp-hero__title {
-    margin-top:5.25rem; font-size: 19vw; line-height: 0.82; color: var(--foreground);
+    margin-top: 2rem; font-size: 19vw; line-height: 0.82; color: var(--foreground);
 }
+/* The large top offset positioned the title inside the old fixed-height hero;
+   keep it only where that height still applies. */
+@media (min-width: 640px) { .lp-hero__title { margin-top: 5.25rem; } }
 .lp-hero__title .accent { color: var(--sky); }
 .lp-hero__tagline {  max-width: 28rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; letter-spacing: -0.025em; margin-top: 2.8rem; }
 .lp-hero__tagline .muted { color: var(--muted-foreground); }
@@ -269,7 +284,9 @@
 
 /* --- Stats --------------------------------------------------------------- */
 .lp-stats__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; overflow: hidden; border-left: 1px solid var(--hairline); border-right: 1px solid var(--hairline); background-color: var(--hairline); }
-.lp-stat { background-color: var(--background); padding: 2.5rem 1rem; text-align: center; }
+/* min-width:0 stops a long stat number from forcing its grid track wider than
+   the screen (the grid clips with overflow:hidden, so it silently cut off). */
+.lp-stat { background-color: var(--background); padding: 2.5rem 1rem; text-align: center; min-width: 0; }
 .lp-stat b { display: block; font-size: 2.25rem; color: var(--foreground); }
 .lp-stat span { margin-top: 0.5rem; display: block; font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.025em; text-transform: uppercase; color: var(--muted-foreground); }
 @media (min-width: 640px) { .lp-stat b { font-size: 3rem; } }
@@ -309,9 +326,13 @@
 .lp-bundle__inner { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 2.5rem; }
 .lp-bundle__h2 { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.025em; text-transform: uppercase; }
 .lp-bundle__sub { margin-top: 0.25rem; font-size: 0.875rem; color: color-mix(in srgb, var(--background) 70%, transparent); }
-.lp-bundle__form { display: flex; width: 100%; max-width: 28rem; align-items: center; gap: 0.5rem; }
+/* Stacked on small phones: side by side, the input's intrinsic minimum width
+   plus the nowrap "Build a Bundle" button overflowed a 320px screen. */
+.lp-bundle__form { display: flex; flex-direction: column; align-items: stretch; width: 100%; max-width: 28rem; gap: 0.5rem; }
+@media (min-width: 480px) { .lp-bundle__form { flex-direction: row; align-items: center; } }
 .lp-bundle__input {
-    height: 2.75rem; flex: 1; border-radius: var(--radius-pill);
+    height: 2.75rem; flex: 1; min-width: 0;   /* min-width:0 lets it actually shrink */
+    border-radius: var(--radius-pill);
     border: 1px solid color-mix(in srgb, var(--background) 25%, transparent);
     background-color: color-mix(in srgb, var(--background) 10%, transparent);
     padding-inline: 1rem; font-size: 0.875rem; color: var(--background); outline: none;

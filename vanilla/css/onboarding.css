@@ -3,7 +3,7 @@
    Standalone centered 3-step wizard (no app shell).
    ============================================================================= */
 
-.ob { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 1.5rem; background-color: var(--background); }
+.ob { display: flex; min-height: 100vh; min-height: 100dvh; align-items: center; justify-content: center; padding: 1.5rem; background-color: var(--background); }
 .ob-card { width: 100%; max-width: 32rem; padding: 2rem; }
 
 .ob-progress { margin-bottom: 2rem; }
