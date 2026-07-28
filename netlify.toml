@@ -1,0 +1,57 @@
+# Netlify deployment for the EarnLoop frontend.
+#
+# There is no build step: the site is hand-written HTML/CSS/JS (no framework, no
+# bundler), so Netlify just serves the vanilla/ folder as-is. Leave the build
+# command EMPTY in the Netlify UI.
+#
+# The backend is Supabase and is not deployed from here. After the first deploy
+# you MUST add the Netlify URL to Supabase -> Auth -> URL Configuration, or
+# Google sign-in will fail. See docs/DEPLOY.md.
+
+[build]
+  publish = "vanilla"
+
+# Serve the files exactly as written. This turns off Netlify's post-processing,
+# including "Pretty URLs", which would otherwise redirect /auth.html to /auth
+# and rewrite links in a hand-authored multi-page site.
+[build.processing]
+  skip_processing = true
+
+# The app's entry page is landing.html and there is no index.html, so the bare
+# domain would 404. Rewrite (status 200) instead of redirecting, so the site
+# root stays clean at "/" rather than bouncing to "/landing.html".
+[[redirects]]
+  from = "/"
+  to = "/landing.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), payment=()"
+
+# These files are hand-edited and carry no content hash in their names, so a
+# long cache would strand users on a stale build. Always revalidate.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Images do change by hand occasionally, so cache for a day rather than a year.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
